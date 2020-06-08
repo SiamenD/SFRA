@@ -1,0 +1,30 @@
+<isloop items="${pdict.braintree.paymentCardInstruments}" var="paymentInstrument">
+    <isif condition="${paymentInstrument.isDefault}">
+        <div class="card-body card-info-group">
+            <p>${paymentInstrument.creditCardHolder}</p>
+            <p>${Resource.msg('label.payment.credit','account',null)} ${paymentInstrument.creditCardType}</p>
+            <p>${paymentInstrument.maskedCreditCardNumber}</p>
+            <p>${Resource.msg('label.payment.ending','account',null)} ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}</p>
+        </div>
+    </isif>
+</isloop>
+
+<isloop items="${pdict.braintree.paymentPaypalInstruments}" var="paymentInstrument">
+    <isif condition="${paymentInstrument.isDefault}">
+        <div class="card-body card-info-group">
+            <h4>${paymentInstrument.email}</h4>
+        </div>
+    </isif> 
+</isloop>
+
+<isloop items="${pdict.braintree.paymentVenmoInstruments}" var="paymentInstrument">
+    <isif condition="${paymentInstrument.isDefault}">
+        <div class="card-body card-info-group">
+            <h4>${paymentInstrument.userID}</h4>
+        </div>
+    </isif> 
+</isloop>
+
+<div class="card-footer card-footer-border text-center">
+    <a href="${URLUtils.url('Braintree-PaymentInstruments')}" class="card-link">${Resource.msg('braintree.account.managepaymentmethods','locale',null)}</a>
+</div>

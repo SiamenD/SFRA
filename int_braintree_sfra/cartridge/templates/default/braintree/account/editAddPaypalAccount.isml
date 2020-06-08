@@ -1,0 +1,70 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/paymentInstruments.js');
+        assets.addCss('/css/account/payment.css');
+
+        assets.addJs(pdict.braintree.prefs.clientPayPalUrl);
+        assets.addJs(pdict.braintree.prefs.clientSdk3PayPalUrl);
+        assets.addJs(pdict.braintree.prefs.clientSdk3PayPalCheckoutUrl);
+        assets.addJs(pdict.braintree.prefs.clientSdk3ClientUrl);
+        assets.addJs(pdict.braintree.prefs.clientSdk3DataCollectorUrl);
+
+        assets.addCss('/css/braintree.css');
+    </isscript>
+    <div class="hero slant-down account-image">
+        <h1 class="page-title">${Resource.msg('page.heading.payments','payment',null)}</h1>
+    </div>
+    <div class="container">
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
+        <div class="row justify-content-center">
+            <div class="col-sm-8 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>${Resource.msg('braintree.paypal.addaccount.title', 'locale', null)}</h4>
+                    </div>
+                    <div class="card-body">
+                   <div class="paypal-account-email"></div>
+                        <div class="braintree-account-add-credit-card-content">
+                        
+                        <form action="${URLUtils.url('Braintree-AccountAddPaypalHandle')}" class="js_braintree_addPaypalAccountForm" method="POST">
+
+                            <div class="error" id="braintreeFormErrorContainer">${empty(pdict.BraintreeError) ? '' : pdict.BraintreeError}</div>
+                            <div id="braintreePayPalAccLoader" class=" braintree-loader-container">
+                                <i class="braintree-loader"></i>
+                            </div>
+                            <div class="js_braintree_accountPaypalButton" data-braintree-config="${JSON.stringify(pdict.braintree.accountPaypalButtonConfig)}"></div>
+                            <input id="braintreePaypalNonce" type="hidden" name="${pdict.paymentForm.nonce.htmlName}" value=""/>
+                            <input id="braintreePaypalEmail" type="hidden" name="${pdict.paymentForm.email.htmlName}" value=""/>
+                            <input id="braintreePaypalBillingAddress" type="hidden" name="${pdict.paymentForm.addresses.htmlName}" value=""/>
+                            <div class="make-default-payment">
+                                <div class="form-group custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="${pdict.paymentForm.makedefault.htmlName}" name="${pdict.paymentForm.makedefault.htmlName}">
+                                    <label class="custom-control-label" for="${pdict.paymentForm.makedefault.htmlName}">
+                                        ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+
+                            <!-- Cancel and Save Buttons -->
+                            <div class="row">
+                                <div class="col">
+                                    <a href="${URLUtils.url('Braintree-PaymentInstruments')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" name="save" class="btn btn-save btn-block btn-primary savePayPalAccountBtn" disabled>${Resource.msg('button.save','account',null)}</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

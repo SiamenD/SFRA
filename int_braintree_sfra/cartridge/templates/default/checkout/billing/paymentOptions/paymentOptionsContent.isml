@@ -1,0 +1,15 @@
+<isinclude template="braintree/checkout/clientSideJsAndCss" />
+<isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
+    <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+        <isinclude template="braintree/checkout/creditcardContent" />
+    </isif>
+    <isif condition="${paymentOption.ID === 'PayPal'}">
+        <isinclude template="braintree/checkout/paypalContent" />
+    </isif>
+    <isif condition="${paymentOption.ID === 'ApplePay'}">
+        <isinclude template="braintree/checkout/applepayContent" />
+    </isif>
+    <isif condition="${pdict.braintree.prefs.BRAINTREE_VENMO_Visibility_Button_On_Checkout && paymentOption.ID === 'Venmo'}">
+        <isinclude template="braintree/checkout/venmoContent" />
+    </isif>
+</isloop>

@@ -1,0 +1,55 @@
+<isset name="braintreePaymentMethodNonce" value="${pdict.braintree.paypalConfig.braintreePaymentMethodNonce}" scope="page" />
+<isset name="braintreePaypalEmail" value="${pdict.braintree.paypalConfig.braintreePaypalEmail || session.custom.btPaypalAccountEmail ||'PayPal'}" scope="page" />
+<div class="tab-pane paypal-content js_braintree_paypalContent" id="paypal-content" role="tabpanel" data-paypal-is-hide-continue-button="${pdict.braintree.paypalConfig.isNeedHideContinueButton}">
+    <fieldset class="payment-form-fields">
+        <input type="hidden" class="form-control" name="isBraintree" value="true" disabled="disabled">
+        <input type="hidden" class="form-control" name="${pdict.forms.billingForm.paymentMethod.htmlName}" value="PayPal">
+        <isif condition="${customer.authenticated && !empty(pdict.braintree.paypalConfig.customerPaypalPaymentInstruments) && (empty(braintreePaymentMethodNonce) || session.custom.showPaypalLists)}">
+            <div class="form-group">
+                <label class="form-control-label" for="braintreePaypalAccountsList">${Resource.msg('braintree.checkout.paypalaccountlist.label','locale',null)}</label>
+                <select name="braintreePaypalAccountList" id="braintreePaypalAccountsList" class="form-control">
+                    <option value="newaccount" <isif condition="${pdict.braintree.paypalConfig.newAccountSelected}">selected="selected"</isif>>${Resource.msg('braintree.checkout.paypalaccountlist.newaccount','locale',null)}</option>
+                    <isloop items="${pdict.braintree.paypalConfig.customerPaypalPaymentInstruments}" var="instrument">
+                        <option value="${instrument.UUID}" data-default="${instrument.custom.braintreeDefaultCard}" data-id="${instrument.UUID}" <isif condition="${instrument.custom.braintreeDefaultCard}">selected="selected"</isif>>
+                            ${Resource.msgf('braintree.checkout.paypalaccountlist.option', 'locale', null, instrument.custom.braintreePaypalAccountEmail)}
+                        </option>
+                    </isloop>
+                </select>
+            </div>
+        </isif>
+
+        <div class="form-group js_braintree_used_paypal_account ${!empty(braintreePaymentMethodNonce) && !session.custom.showPaypalLists ? 'used-paypal-account' : 'used-paypal-account-hide'}">
+            <label class="form-control-label" for="braintreePaypalAccount">${Resource.msg('braintree.checkout.paypalaccountselected.label','locale',null)}</label>
+            <select id="braintreePaypalAccount" class="form-control no-disable" disabled="disabled" data-customer-authenticated="${customer.authenticated}">
+                <option selected="selected">
+                    ${Resource.msgf('braintree.checkout.paypalaccountlist.option', 'locale', null, braintreePaypalEmail)}
+                </option>
+            </select>
+        </div>
+
+        <isif condition="${customer.authenticated && pdict.braintree.paypalConfig.isAllowedAddAccount && pdict.braintree.prefs.BRAINTREE_PAYPAL_Payment_Model !== 'order'}">
+            <div id="braintreeSavePaypalAccountContainer" class="form-group custom-control custom-checkbox">
+                <input class="custom-control-input" name="braintreeSavePaypalAccount" id="braintreeSavePaypalAccount" type="checkbox" checked="checked" value="true" />
+                <label class="custom-control-label" for="braintreeSavePaypalAccount"><span>${Resource.msg('braintree.checkout.paypal.saveaccount', 'locale', null)}</span></label>
+            </div>
+            <div class="form-group custom-control custom-checkbox">
+                <input class="custom-control-input" name="braintreePaypalAccountMakeDefault" id="braintreePaypalAccountMakeDefault" type="checkbox" checked="checked" value="true" />
+                <label class="custom-control-label" for="braintreePaypalAccountMakeDefault"><span>${Resource.msg('braintree.checkout.paypal.makedefault', 'locale', null)}</span></label>
+            </div>
+        </isif>
+
+        <input id="braintreePaypalEmail" type="hidden" name="braintreePaypalEmail" value="${braintreePaypalEmail}"/>
+
+        <div class="form-row form-indent ${empty(braintreePaymentMethodNonce) || session.custom.showPaypalLists ? '' : 'used-paypal-account-hide'}">
+            <div class="js_braintree_paypal_billing_button" data-braintree-config="${JSON.stringify(pdict.braintree.payPalButtonConfig)}" style="display:${!pdict.braintree.paypalConfig.isNeedHideContinueButton ? 'none' : 'block'}"></div>
+                <div class="braintreePayPalLoader braintree-loader-container">
+                    <i class="braintree-loader"></i>
+                </div>
+        </div>
+
+        <input id="braintreePaypalNonce" type="hidden" name="braintreePaypalNonce" value="${braintreePaymentMethodNonce}"/>
+        <input type="hidden" name="braintreePaypalShippingAddress" value=""/>
+        <input type="hidden" name="braintreePaypalBillingAddress" value=""/>
+        <input type="hidden" name="braintreePaypalRiskData" value=""/>
+    <fieldset class="payment-form-fields">
+</div>

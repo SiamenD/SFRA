@@ -1,0 +1,8 @@
+<div>
+    <div class="venmo-method-name">
+        ${dw.order.PaymentMgr.getPaymentMethod(payment.paymentMethod).getName()}
+    </div>
+    <div class="venmoy-amount">
+        ${dw.util.StringUtils.formatMoney(new dw.value.Money(payment.amount, pdict.braintree.currency))}
+    </div>
+</div>

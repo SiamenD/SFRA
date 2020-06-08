@@ -1,0 +1,344 @@
+.payment-method-braintree {
+	position: relative;
+}
+.payment-method-braintree .error {
+	min-height: 1.5em;
+	line-height: 1.5em;
+	color: #f00;
+	margin-top: -0.5em;
+}
+.payment-method-braintree .braintree-field-wrap {
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+	position: relative;
+	height: 2.25em;
+}
+.payment-method-braintree .braintree-field-wrap select {
+	width: 100%;
+}
+.payment-method-braintree .braintree-hosted-fields-iframe-container {
+	padding: 0 0.313em;
+	width: 100%;
+	height: 2.375em;
+	border: 1px solid #aaa;
+	border-radius: .1875rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.payment-method-braintree .braintree-hosted-fields-ph {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 2.375em;
+	width: 100%;
+	padding: 0 0.313em;
+	line-height: 2.375em;
+	cursor: default;
+	color: #aaa;
+	border: 1px solid #aaa;
+	border-radius: .1875rem;
+}
+.payment-method-braintree .braintree-text-input {
+	width: 100%;
+	height: 2.375em;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border: 1px solid #ced4da;
+	border-radius: .1875rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.payment-method-braintree .braintree-text-input input {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	border: none;
+	padding: 0 0.313em;
+	height: 2.125em;
+	line-height: 2.125em;
+	box-sizing: inherit;
+	outline: none;
+	box-shadow: none;
+}
+
+.payment-method-braintree .braintree-hosted-fields-focused {
+	box-shadow: 0px 0px 2px #ffdb4d;
+}
+.payment-method-braintree .braintree-hosted-fields-invalid {
+	border-color: #ff0000;
+}
+.payment-method-braintree .braintree-hosted-fields-valid {
+	border-color: #84bd00;
+}
+.braintree-loader-container { 
+	position: absolute;
+	display: none;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	opacity: 0.7;
+	z-index: 990;
+}
+.braintree-loader {
+    position: absolute;
+    color: #383838;
+    font-size: 4px;
+    background: #fff;
+    opacity: 0.5;
+    margin: auto;
+    left: 50%;
+    top: 50%;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    text-indent: -9999em;
+    -webkit-animation: load 1s infinite linear;
+    animation: load 1s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+  @keyframes load {
+    0%,
+    100% {
+      box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    }
+    12.5% {
+      box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    25% {
+      box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    37.5% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    50% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    62.5% {
+      box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+    75% {
+      box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+    87.5% {
+      box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
+  }
+
+.braintree-account-add-credit-card-content .braintree-hosted-fields-ph {
+	display: none;
+}
+.braintree-account-add-credit-card-content #braintreeFormErrorContainer {
+	color: #f00;
+	line-height: 1.5em;
+	min-height: 1.5em;
+}
+
+.braintree-creditcard-content .cardNumber {
+	display: none;
+}
+
+.used-paypal-account-hide {
+	display: none;
+}
+
+.braintree-cart-paypal-buttons-wrap {
+	position: relative;
+	vertical-align: middle;
+	text-align: right;
+	padding-bottom: 0.938em;
+}
+.braitnree-cart-paypal-button {
+	display: inline-block;
+	min-height: 2.188em;
+	width: 100%;
+	position: relative;
+}
+@media (max-width: 543.98px) {
+	.checkout-continue .braintree-cart-paypal-buttons-wrap .error {
+		padding: 0;
+	}
+	.checkout-continue .braintree-cart-paypal-buttons-wrap .braitnree-cart-paypal-button {
+		padding: 0;
+	}
+}
+
+#braintree3DSecureContainer {
+	display: none;
+}
+
+.braintree-account-paypal-button {
+	display: block;
+	width: 10.625em;
+	height: 2em;
+	background: #fff url(../images/braintree_paypal_checkout_btn.png) 0 0 no-repeat;
+	cursor: pointer;
+}
+.braintree_pdp_button {
+	padding: 1.5em;
+}
+
+@media screen and (min-width: 768px) {
+	#braintree3DSecureContainer {
+		padding-left: 22%;
+	}
+}
+
+.braintree-cart-apple-buttons-wrap {
+	text-align: right;
+	padding-bottom: 0.938em;
+	display: none;
+	position: relative;
+}
+.braintree-cart-apple-button-wrap {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	width: 100%;
+	min-height: 2em;
+}
+
+.braintree-billingpage-apple-buttons-wrap {
+	text-align: left;
+	padding-bottom: 0.938em;
+	display: none;
+	position: relative;
+}
+.braintree-billingpage-apple-button-wrap {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	min-width: 15.625em;
+	min-height: 2em;
+}
+
+@supports (-webkit-appearance: -apple-pay-button) {
+	.apple-pay-button-with-text {
+		display: inline-block;
+		width: 100%;
+		-webkit-appearance: -apple-pay-button;
+		-apple-pay-button-type: buy;
+		cursor: pointer;
+	}
+	.apple-pay-button-with-text > * {
+		display: none;
+	}
+	.apple-pay-button-black-with-text {
+		-apple-pay-button-style: black;
+	}
+	.apple-pay-button-white-with-text {
+		-apple-pay-button-style: white;
+	}
+	.apple-pay-button-white-with-line-with-text {
+		-apple-pay-button-style: white-outline;
+	}
+}
+@supports not (-webkit-appearance: -apple-pay-button) {
+	.apple-pay-button-with-text {
+		--apple-pay-scale: 1;
+		display: inline-flex;
+		width: 100%;
+		justify-content: center;
+		font-size: 0.75em;
+		border-radius: 0.313em;
+		padding: 0em;
+		box-sizing: border-box;
+		min-width: 12.5em;
+		min-height: 2em;
+		max-height: 4em;
+		cursor: pointer;
+	}
+	.apple-pay-button-black-with-text {
+		background-color: black;
+		color: white;
+	}
+	.apple-pay-button-white-with-text {
+		background-color: white;
+		color: black;
+	}
+	.apple-pay-button-white-with-line-with-text {
+		background-color: white;
+		color: black;
+		border: .5px solid black;
+	}
+	.apple-pay-button-with-text.apple-pay-button-black-with-text > .logo {
+		background-image: -webkit-named-image(apple-pay-logo-white);
+		background-color: black;
+	}
+	.apple-pay-button-with-text.apple-pay-button-white-with-text > .logo {
+		background-image: -webkit-named-image(apple-pay-logo-black);
+		background-color: white;
+	}
+	.apple-pay-button-with-text.apple-pay-button-white-with-line-with-text > .logo {
+		background-image: -webkit-named-image(apple-pay-logo-black);
+		background-color: white;
+	}
+	.apple-pay-button-with-text > .text {
+		font-family: -apple-system;
+		font-size: calc(1em * var(--apple-pay-scale));
+		font-weight: 300;
+		align-self: center;
+		margin-right: calc(2px*var(--apple-pay-scale));
+	}
+	.apple-pay-button-with-text > .logo {
+		width: calc(2.188em*var(--scale));
+		height: 100%;
+		background-size: 100% 60%;
+		background-repeat: no-repeat;
+		background-position: 0 50%;
+		margin-left: calc(0.125em*var(--apple-pay-scale));
+		border: none;
+	}
+}
+.js_braintree_applepay_button_disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+@media (max-width: 543.98px) {
+	.checkout-continue .braintree-cart-apple-buttons-wrap .error {
+		padding: 0;
+	}
+	.checkout-continue .braintree-cart-apple-buttons-wrap .braintree-cart-apple-button-wrap {
+		padding: 0;
+	}
+	.checkout-continue .braintree-cart-apple-buttons-wrap .braintree-cart-apple-button {
+		padding: 0;
+	}
+}
+
+.used-venmo-account-hide {
+	display: none;
+}
+
+.braintree-venmo-pay-button {width:170px; height:32px; background: url(../images/braintree_venmo_btn.png) 0 0/150px no-repeat ; cursor:pointer}
+.braintree_accountVenmoButton {width:280px; height:48px; background: url(../images/braintreeAccount_venmo.png) 0 0/250px no-repeat ; cursor:pointer}
+
+.venmoUsername{
+	color:#000000;
+	line-height: 2.5em;
+}
+
+#venmo-content .venmo-error{
+	color: #f00;
+	line-height: 1.5em;
+	min-height: 1.5em;
+}
+
+.venmo-braintree-loader {
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+	height: 100%;
+    opacity: 0.9;
+	background: #fff 50% 50% url(../images/ajax-loader.gif) no-repeat;
+	z-index: 100;
+	text-align: center;
+}

@@ -1,0 +1,6 @@
+<div class="card">
+    <div class="card-header clearfix">
+        <h4 class="pull-left">${Resource.msg('label.payment','account',null)}</h4>
+    </div>
+    <isinclude template="braintree/account/paymentBlock"/>
+</div>

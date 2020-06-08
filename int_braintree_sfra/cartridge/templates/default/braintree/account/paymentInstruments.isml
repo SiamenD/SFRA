@@ -1,0 +1,185 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/paymentInstruments.js');
+        assets.addCss('/css/account/payment.css');
+    </isscript>
+    <isinclude template="account/payment/deletePaymentModal" />
+    <div class="hero slant-down account-image">
+        <h1 class="page-title">${Resource.msg('page.heading.payments', 'payment', null)}</h1>
+    </div>
+    <div class="container">
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs" />
+        <div class="row justify-content-center">
+            <div class="col">
+                <isif condition="${!pdict.paymentCardInstruments}">
+                    <h3>${Resource.msg('braintree.account.noanycard', 'locale', null)}</h3>
+                    <iselse>
+                        <h3>${Resource.msg('braintree.account.creditcards.title', 'locale', null)}</h3>
+                </isif>
+            </div>
+        </div>
+
+        <!-- Rows for Credit Cards -->
+        <isloop items="${pdict.paymentCardInstruments}" var="paymentInstrument">
+            <div class="row justify-content-center" id="uuid-${paymentInstrument.UUID}">
+                <div class="col-sm-8 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="pull-left">
+                                ${paymentInstrument.creditCardHolder}
+                                <isif condition="${paymentInstrument.isDefault}">
+                                    <b>${Resource.msg('braintree.paypal.accountslist.default', 'locale', null)}</b>
+                                </isif>
+                            </h4>
+                        </div>
+                        <div class="card-body card-body-positioning">
+                            <div class="card-info-group">
+                                <p>${Resource.msg('label.payment.credit', 'account', null)}
+                                    ${paymentInstrument.creditCardType}</p>
+                                <p>${paymentInstrument.maskedCreditCardNumber}</p>
+                                <p>${Resource.msg('label.payment.ending', 'account', null)}
+                                    ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}
+                                </p>
+                            </div>
+                            <button type="button" class="remove-btn remove-payment" data-toggle="modal"
+                                data-target="#deletePaymentModal" data-id="${paymentInstrument.UUID}"
+                                data-card="${paymentInstrument.maskedCreditCardNumber}"
+                                data-url="${pdict.actionUrl}">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </isloop>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <a href="${URLUtils.url('Account-Show')}">
+                            <p class="text-center back-to-account-link">
+                                ${Resource.msg('link.profile.backtomyaccount', 'account', null)}</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                    <isif condition="${!pdict.braintree.prefs.BRAINTREE_3DSecure_Enabled}" >
+                        <a href="${URLUtils.url('Braintree-AccountAddCreditCard')}"
+                            class="btn btn-save btn-block btn-primary">
+                            ${Resource.msg('braintree.account.addcard', 'locale', null)}</a>
+                            </isif>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col">
+                <isif condition="${!pdict.paymentPaypalInstruments}">
+                    <h3>${Resource.msg('braintree.account.noanypaypalaccount', 'locale', null)}</h3>
+                    <iselse>
+                        <h3>${Resource.msg('braintree.account.paypalaccounts.title', 'locale', null)}</h3>
+                </isif>
+            </div>
+        </div>
+
+        <!-- Rows for PayPal accounts -->
+        <isloop items="${pdict.paymentPaypalInstruments}" var="paymentInstrument">
+            <div class="row justify-content-center" id="uuid-${paymentInstrument.UUID}">
+                <div class="col-sm-8 col-md-6">
+                    <div class="card">
+                        <div class="card-body card-body-positioning">
+                            <div class="card-info-group">
+                                <h4>${paymentInstrument.email}</h4>
+                                <isif condition="${paymentInstrument.isDefault}">
+                                    <p>
+                                        <b>${Resource.msg('braintree.paypal.accountslist.default', 'locale', null)}</b>
+                                    </p>
+                                </isif>
+                            </div>
+                            <button type="button" class="remove-btn remove-payment" data-toggle="modal"
+                                data-target="#deletePaymentModal" data-id="${paymentInstrument.UUID}"
+                                data-card="${paymentInstrument.maskedCreditCardNumber}" data-url="${pdict.actionUrl}">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </isloop>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <a href="${URLUtils.url('Account-Show')}">
+                            <p class="text-center back-to-account-link">
+                                ${Resource.msg('link.profile.backtomyaccount', 'account', null)}</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="${URLUtils.url('Braintree-AccountAddPaypalAccount')}"
+                            class="btn btn-save btn-block btn-primary">
+                            ${Resource.msg('braintree.account.addpaypalaccount', 'locale', null)}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row justify-content-center">
+            <div class="col">
+                <isif condition="${!pdict.paymentVenmoInstruments}">
+                    <h3>${Resource.msg('braintree.account.noanyvenmoaccount', 'locale', null)}</h3>
+                    <iselse>
+                        <h3>${Resource.msg('braintree.account.venmoaccounts.title', 'locale', null)}</h3>
+                </isif>
+            </div>
+        </div>
+        
+        <!-- Rows for Venmo accounts -->
+        <isloop items="${pdict.paymentVenmoInstruments}" var="paymentInstrument">
+            <div class="row justify-content-center" id="uuid-${paymentInstrument.UUID}">
+                <div class="col-sm-8 col-md-6">
+                    <div class="card">
+                        <div class="card-body card-body-positioning">
+                            <div class="card-info-group">
+                                <h4>${paymentInstrument.userID}</h4>
+                                <isif condition="${paymentInstrument.isDefault}">
+                                    <p>
+                                        <b>${Resource.msg('braintree.venmo.accountslist.default', 'locale', null)}</b>
+                                    </p>
+                                </isif>
+                            </div>
+                            <button type="button" class="remove-btn remove-payment" data-toggle="modal"
+                                data-target="#deletePaymentModal" data-id="${paymentInstrument.UUID}"
+                                data-url="${pdict.actionUrl}">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </isloop>
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <a href="${URLUtils.url('Account-Show')}">
+                            <p class="text-center back-to-account-link">
+                                ${Resource.msg('link.profile.backtomyaccount', 'account', null)}</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="${URLUtils.url('Braintree-AccountAddVenmoAccount')}"
+                            class="btn btn-save btn-block btn-primary">
+                            ${Resource.msg('braintree.account.addvenmoaccount', 'locale', null)}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</isdecorate>

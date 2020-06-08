@@ -1,0 +1,59 @@
+<div class="tab-pane active creditcard-content braintree-creditcard-content js_braintree_creditCardContent" id="creditcard-content" role="tabpanel" data-paypal-is-hide-continue-button="${false}">
+    <fieldset class="payment-form-fields">
+        <iscomment>Without input.cardNumber "Error: [cleave.js] Please check the element" is appear</iscomment>
+        <input type="text" class="cardNumber" id="cardNumber" name="cardNumber" />
+
+        <input type="hidden" class="form-control" name="isBraintree" value="true" disabled="disabled" />
+        <input type="hidden" class="form-control" name="${pdict.forms.billingForm.paymentMethod.htmlName}" value="${pdict.braintree.prefs.paymentMethods.BRAINTREE_CREDIT.paymentMethodId}" >
+        
+        <input type="hidden" class="js_braintree_getOrderInfoUrl" value="${URLUtils.url('Braintree-GetOrderInfo').toString()}" />
+
+        <isif condition="${customer.authenticated && !empty(pdict.braintree.creditCardConfig.customerCreditCardPaymentInstruments)}">
+            <div class="form-group">
+                <label class="form-control-label" for="braintreeCreditCardList">${Resource.msg('braintree.cardlist.label','locale',null)}</label>
+                <select name="braintreeCreditCardList" id="braintreeCreditCardList" class="form-control" data-get-payment-nonce-url="${URLUtils.url('Braintree-GetPaymentMethodNonceByUUID').toString()}">
+                    <option value="newcard" <isif condition="${pdict.braintree.creditCardConfig.newCardSelected}">selected="selected"</isif>>${Resource.msg('braintree.cardlist.newcard','locale',null)}</option>
+                    <isloop items="${pdict.braintree.creditCardConfig.customerCreditCardPaymentInstruments}" var="creditCardInstr">
+                        <option value="${creditCardInstr.UUID}"
+                            <isif condition="${creditCardInstr.custom.braintreeDefaultCard}">selected="selected"</isif>
+                            data-type="${creditCardInstr.creditCardType}"
+                            data-number="${creditCardInstr.maskedCreditCardNumber}"
+                            data-owner="${creditCardInstr.creditCardHolder}"
+                            data-expiration="${Resource.msgf('braintree.cardlist.expirationdate', 'locale', null, StringUtils.formatNumber(creditCardInstr.creditCardExpirationMonth, '00'), StringUtils.formatNumber(creditCardInstr.creditCardExpirationYear, '0000'))}"
+                            data-default="${creditCardInstr.custom.braintreeDefaultCard}"
+                            data-id="${creditCardInstr.UUID}">
+                                ${Resource.msgf('braintree.cardlist.option', 'locale', null, creditCardInstr.maskedCreditCardNumber, creditCardInstr.creditCardType, StringUtils.formatNumber(creditCardInstr.creditCardExpirationMonth, '00'), StringUtils.formatNumber(creditCardInstr.creditCardExpirationYear, '0000'), creditCardInstr.creditCardHolder)}
+                        </option>
+                    </isloop>
+                </select>
+
+            </div>
+
+        </isif>
+
+        <isinclude template="braintree/util/creditCardFields"/>
+        
+        <isif condition="${customer.authenticated && pdict.braintree.creditCardConfig.isAllowedAddCard}">
+            <div id="braintreeSaveCardAndDefaultContainer">
+                <div id="braintreeSaveCardContainer" class="row">
+                    <div class="col">
+                        <div class="form-group custom-control custom-checkbox">
+                            <input class="custom-control-input" name="braintreeSaveCreditCard" id="braintreeSaveCreditCard" type="checkbox" checked="checked" value="true" />
+                            <label class="custom-control-label" for="braintreeSaveCreditCard">${Resource.msg('braintree.creditcard.savecard', 'locale', null)}</label>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group custom-control custom-checkbox">
+                            <input class="custom-control-input" name="braintreeCreditCardMakeDefault" id="braintreeCreditCardMakeDefault" type="checkbox" checked="checked" value="true" />
+                            <label class="custom-control-label" for="braintreeCreditCardMakeDefault">${Resource.msg('braintree.creditcard.makedefault', 'locale', null)}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </isif>
+    </fieldset>
+</div>
+

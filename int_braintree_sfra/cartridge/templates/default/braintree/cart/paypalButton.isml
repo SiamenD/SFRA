@@ -1,0 +1,17 @@
+<isif condition="${pdict.braintree && (pdict.braintree.payPalButtonConfig || pdict.braintree.payPalBAButtonConfig)}">
+    <div class="braintree-cart-paypal-buttons-wrap">
+        <isif condition="${pdict.braintree.payPalBAButtonConfig}">
+            <div class="js_braintree_paypal_cart_button braitnree-cart-paypal-button braitnree-cart-paypal-ba-button"
+                data-braintree-config="${JSON.stringify(pdict.braintree.payPalBAButtonConfig)}"></div>
+            <isif condition="${!request.httpParameterMap.isCartPage.booleanValue}">
+                <isinclude template="braintree/cart/addShippingAddressModal" />
+            </isif>
+            <iselse>
+                <div class="js_braintree_paypal_cart_button braitnree-cart-paypal-button"
+                    data-braintree-config="${JSON.stringify(pdict.braintree.payPalButtonConfig)}"></div>
+        </isif>
+            <div class="braintreePayPalLoader braintree-loader-container">
+                <i class="braintree-loader"></i>
+            </div>
+    </div>
+</isif>

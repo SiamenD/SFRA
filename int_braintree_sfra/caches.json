@@ -1,0 +1,15 @@
+{
+  "caches": [
+    {
+      "id": "paypalCreditFinancingOptions.RefArch",
+      "expireAfterSeconds": 300
+    },
+    {
+      "id": "paypalCreditFinancingOptions.MobileFirst",
+      "expireAfterSeconds": 300
+    },
+    {
+      "id": "braintreePreferences"
+    }
+  ]
+}
